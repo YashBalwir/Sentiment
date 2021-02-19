@@ -1,19 +1,56 @@
-<table class="table table-striped table-sm">
-    <thead>
-      <tr>
-        <th>sr</th>
-        <th>name</th>
-        <th>age</th>
 
-      </tr>
-    </thead>
-    <tbody>
-      {% for value in stocklist%}
-      <tr>
-        <td>{{ value[0] }}</td>
-        <td>{{ value[1] }}</td>
-        <td>{{ value[2] }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>visualize</title>
+  </head>
+  <body>
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>sr</th>
+          <th>name</th>
+          <th>age</th>
+  
+        </tr>
+      </thead>
+      <tbody>
+        {% for value in stocklist%}
+        <tr>
+          <td>{{ value[0] }}</td>
+          <td>{{ value[1] }}</td>
+          <td>{{ value[2] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <canvas id="chart"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+    <script>
+      d3.csv("../data.csv").then(makeChart);
+
+  function makeChart(players) {
+  var playerLabels = players.map(function(d) {return d.Name});
+  var weeksData = players.map(function(d) {return d.Age});
+
+  var chart = new Chart('chart', {
+    type: 'horizontalBar',
+    data: {
+      labels: playerLabels,
+      datasets: [
+        {
+          data: weeksData
+        }
+      ]
+    }
+  });
+}
+    </script>
+  </body>
+  </html>
